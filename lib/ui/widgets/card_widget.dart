@@ -98,67 +98,65 @@ class _CardWidgetState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 207, 180, 233),
-            borderRadius: BorderRadius.circular(15)),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () => controller.downloadBook(
-                        widget.downloadUrlImage, widget.title),
-                    child: Image.network(
-                      widget.coverImage,
-                    ),
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 207, 180, 233),
+          borderRadius: BorderRadius.circular(15)),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Stack(
+        children: [
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () => controller.downloadBook(
+                      widget.downloadUrlImage, widget.title),
+                  child: Image.network(
+                    widget.coverImage,
                   ),
-                  Text(
-                    widget.title,
-                    style:
-                        const TextStyle(color: Color(0xff7b2cbf), fontSize: 16),
+                ),
+                Text(
+                  widget.title,
+                  style:
+                      const TextStyle(color: Color(0xff7b2cbf), fontSize: 16),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  widget.author,
+                  style: const TextStyle(
+                    color: Color(0xffd4d4d4),
                   ),
-                  const SizedBox(height: 3),
-                  Text(
-                    widget.author,
-                    style: const TextStyle(
-                      color: Color(0xffd4d4d4),
-                    ),
-                  )
-                ],
-              ),
+                ), const SizedBox(height:3),
+                ElevatedButton(onPressed: () {
+                  log("=====filePath======${filePath.toString()}");
+                      if (filePath == "") {
+                        download();
+                      } else {
+                        download();
+                        openBook();
+                        setState(() {
+                          filePath == '';
+                        });
+                      }
+                }, child: const Text('Abrir livro')),
+              ],
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {
-                  widget.isFavorite = !widget.isFavorite;
-                  setState(() {});
-                },
-                icon: const Icon(Icons.bookmark),
-                color: widget.isFavorite ? Colors.redAccent : Colors.white,
-              ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              onPressed: () {
+                widget.isFavorite = !widget.isFavorite;
+                setState(() {});
+              },
+              icon: const Icon(Icons.bookmark),
+              color: widget.isFavorite ? Colors.redAccent : Colors.white,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      onTap: () {
-        log("=====filePath======${filePath.toString()}");
-        if (filePath == "") {
-          download();
-        } else {
-          download();
-          openBook();
-          setState(() {
-            filePath == '';
-          });
-        }
-      },
     );
   }
 
